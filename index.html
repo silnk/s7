@@ -253,12 +253,11 @@
             // Calculate minimal margins - centered horizontally
             const leftRightMargin = (pdfWidth - totalRowWidth) / 2; // (210-175)/2 = 17.5mm each side
             
-            // Calculate vertical spacing for 2 rows
-            const rowGap = 10; // 10mm gap between rows
-            const totalHeightNeeded = (2 * photoHeight) + rowGap; // 90mm + 10mm = 100mm
-            
-            // Center vertically
-            const startY = (pdfHeight - totalHeightNeeded) / 2; // (297-100)/2 = 98.5mm from top
+            // Position at the VERY TOP of the page (0.5mm from top - absolute minimum)
+            const startYFirstRow = 0.5;
+            // Small gap between rows (1mm)
+            const rowGap = 1;
+            const startYSecondRow = startYFirstRow + photoHeight + rowGap;
 
             // Load the image and add it 10 times to the PDF (2 rows of 5)
             const img = new Image();
@@ -272,7 +271,7 @@
                         currentImageData, 
                         'JPEG', 
                         xPos, 
-                        startY, 
+                        startYFirstRow, 
                         photoWidth, 
                         photoHeight
                     );
@@ -287,7 +286,7 @@
                         currentImageData, 
                         'JPEG', 
                         xPos, 
-                        startY + photoHeight + rowGap, 
+                        startYSecondRow, 
                         photoWidth, 
                         photoHeight
                     );
